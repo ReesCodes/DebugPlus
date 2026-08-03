@@ -222,6 +222,8 @@ commands = {{
     joker remove : Removes jokers from joker slots
         Usage: joker remove {count} 
         if no count is provided remove all jokers
+    joker setjokerlim : Sets the maximum number of jokers you can have
+        Usage: joker setjokerlim {count}
     ]],
     exec = function(args, rawArgs, dp)
         if G.STAGE ~= G.STAGES.RUN then
@@ -296,6 +298,15 @@ commands = {{
                 end
             end
             return "No more Jokers"
+        elseif args[1] == "setjokerlim" then
+            local count = tonumber(args[2])
+            if not count then
+                return "Please provide a valid number to set.", "ERROR"
+            end
+            G.jokers.config.card_limit = count
+            return "Max Jokers set to " .. count
+        else
+            return "Invalid subcommand. Available subcommands are 'add', 'remove', and 'setjokerlim'. For more info, run 'help joker'"
         end
     end
 }, {
